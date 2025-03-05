@@ -1,0 +1,946 @@
+/* Reset some default styles for consistency */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: #1e1e1e;
+  }
+  
+  /* General body styles */
+  body {
+    font-family: 'Arial', sans-serif;
+    background-color: #212121; /* Dark gray background similar to ChatGPT's */
+    color: rgb(1, 1, 1);
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Navbar Styles */
+  .navbar {
+    background-color: #1e1e1e; /* Dark background for navbar */
+    padding: 10px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .navbar h4 {
+    margin: 0;
+    color: #ffffff;
+  }
+  
+  /* Wrapper for the whole chat interface */
+  .chat-wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    padding: 20px;
+  }
+  
+  /* Chat container (left for input, right for response) */
+  .chat-container {
+    display: flex;
+    flex: 1;
+    gap: 20px; /* Space between the input and response components */
+     /* Adjust height for the navbar */
+    position: relative;
+    top: 10px; 
+     
+  }
+  
+  /* Chat Input and Response containers */
+  .chat-input-container,
+  .chat-response-container {
+    flex: 1;
+    background-color: #101010 !important; /* Dark background for both input and response */
+    border-radius: 8px;
+    padding: 8px !important;
+    overflow-y: auto; /* Auto overflow for both input and response areas */
+  }
+  
+  /* Input area styles */
+  .chat-input-container {
+    display: flex;
+    flex-direction: column;
+    height: 462px;
+    padding: 15px; 
+  }
+  
+  .chat-textarea {
+    background-color: #333; /* Darker background for textarea */
+    color: white;
+    border: 1px solid #444;
+    border-radius: 8px;
+    padding: 10px;
+    font-family: 'Courier New', monospace;
+    resize: vertical; /* Allow vertical resizing */
+    min-height: 200px;
+    max-height: 365px;
+    width: 100%;
+  }
+  
+  /* Button styles */
+  button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 14px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 10px;
+  }
+  
+  button:hover {
+    background-color: #45a049;
+  }
+  
+  /* Response area styles */
+  .chat-response-container {
+    background-color: #121212; /* Darker background for response area */
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+  }
+  
+  pre code.hljs {
+      height: 431px;
+  }
+
+  .preResponse pre {
+    background-color: #333;
+    border-radius: 8px;
+    overflow-x: auto;
+  }
+  
+  /* Loading message */
+  .loading-message {
+    font-size: 18px;
+    color: #bbb;
+    text-align: center;
+  }
+
+  .languageSelector {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-height: 200px !important; 
+    text-align: center;
+  }
+  pre{
+    margin-bottom: 0rem !important;
+  }
+  .languageSelector .form-select {
+    width: 15% !important;
+    background-color: #efe5e5 !important;
+   
+}
+
+
+
+.chat-textarea {
+    width: 100%;
+    font-family: "Courier New", Courier, monospace;
+    font-size: 14px;
+    background-color: #2d2d2d;
+    border: 1px solid #444;
+    padding: 10px;
+    resize: none;
+    overflow: auto; /* Enable scrollbars */
+    scrollbar-width: thin; /* For Firefox */
+    scrollbar-color: #444 #2d2d2d; /* Scrollbar and track colors */
+  }
+  
+  /* For Webkit browsers (Chrome, Edge, Safari) */
+  .chat-textarea::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  .chat-textarea::-webkit-scrollbar-thumb {
+    background-color: #444;
+    border-radius: 4px;
+  }
+  
+  .chat-textarea::-webkit-scrollbar-thumb:hover {
+    background-color: #666;
+  }
+  
+  .chat-textarea::-webkit-scrollbar-track {
+    background-color: #2d2d2d;
+  }
+  
+  /* Container styling */
+  .chat-input-container {
+    padding: 15px;
+    background-color: #1e1e1e;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .form-select option {
+    background-color: black; /* Black background for options */
+    color: rgb(227, 227, 227); /* White text for options */
+  }
+  
+  .form-select:hover {
+    border-color: #555; /* Slightly lighter border on hover */
+    cursor: pointer;
+  }
+  
+  .text-white {
+    color: white;
+  }
+  
+  .language-selector select:focus {
+    outline: none; /* Remove default outline on focus */
+    border-color: #888; /* Lighter border color on focus */
+  }
+
+/* Copy button styling */
+.copyButton {
+    position: absolute;
+    top: 21px;
+    right: 21px;
+    font-size: 12px;
+    padding: 3px 8px;
+    border-radius: 4px;
+    color: #bfbdbd;
+    background-color: #424141;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .copyButton:hover {
+    background-color: #5f5f5f;
+  }
+  
+/* Loader container styles */
+.loading-screen {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 430px;
+    width: 100% !important;
+    background-color: #1e1e1e; /* Match the dark theme */
+    position: relative;
+    
+  }
+  
+  /* Loader content styles */
+  .loading-content {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px; /* Space between spinner and text */
+  }
+  
+  /* Spinner styles */
+  .spinner {
+    width: 50px;
+    height: 50px;
+    border: 4px solid #444; /* Gray background for spinner */
+    border-top-color: #4caf50; /* Accent color for spinner animation */
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+  
+  /* Spinner animation */
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  
+  /* Loading text */
+  .loading-text {
+    font-size: 16px;
+    font-weight: 500;
+    color: #bbb; /* Light gray text for visibility */
+    text-align: center;
+    font-family: "Arial", sans-serif;
+    letter-spacing: 0.5px; /* Slight spacing for readability */
+  }
+  
+  /* Add glow effect to text */
+  .loading-text::after {
+    content: ".";
+    animation: dots 1.5s steps(3, end) infinite;
+  }
+  
+  @keyframes dots {
+    0% {
+      content: ".";
+    }
+    33% {
+      content: "..";
+    }
+    66% {
+      content: "...";
+    }
+    100% {
+      content: ".";
+    }
+  }
+  
+
+  /* Login Container Styles */
+.login-container {
+  background-color: #1e1e1e; /* Dark background for the login container */
+  border-radius: 8px;
+  padding: 30px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  max-width: 400px;
+  margin: 50px auto; /* Center the login container */
+  text-align: center;
+}
+
+/* Login Heading */
+.login-container h2 {
+  color: white;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+/* Input Fields */
+.login-container input {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  background-color: #333;
+  border: 1px solid #444;
+  color: white;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+/* Input focus effect */
+.login-container input:focus {
+  outline: none;
+  border-color: #4CAF50; /* Green border on focus */
+  background-color: #2d2d2d;
+}
+
+/* Submit Button */
+.login-container button {
+  width: 100%;
+  padding: 12px;
+  background-color: #4CAF50; /* Green button */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-top: 20px;
+}
+
+/* Button hover effect */
+.login-container button:hover {
+  background-color: #45a049; /* Darker green on hover */
+}
+
+/* Link Styles */
+.login-container p {
+  color: white;
+  margin-top: 20px;
+}
+
+.login-container a {
+  color: #4CAF50; /* Green color for the link */
+  text-decoration: none;
+}
+
+.login-container a:hover {
+  text-decoration: underline;
+}
+
+.error-message {
+  color: red;
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+
+
+.login-register-link {
+  text-align: center;
+  margin-top: 15px;
+}
+
+.oauth-buttons {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.oauth-buttons p {
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.oauth-button {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 4px;
+  border: none;
+  margin: 5px 0;
+}
+
+.google-button {
+  background-color: #db4437;
+  color: white;
+}
+
+.google-button:hover {
+  background-color: #c1351d;
+}
+
+.github-button {
+  background-color: #24292f;
+  color: white;
+}
+
+.github-button:hover {
+  background-color: #333;
+}
+
+/* Register Container */
+.register-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 83vh;
+  padding: 20px;
+  position: relative;
+  top: 7px;
+  overflow: hidden;
+  background-color: #212121; /* Dark background for the page */
+}
+
+/* Register Heading */
+.register-heading {
+  color: #fff;
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+/* Register Form */
+.register-form {
+  width: 100%;
+  max-width: 400px;
+  background-color: #333;
+  border-radius: 8px;
+  padding: 30px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Register Input Fields */
+.register-input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border: 1px solid #444;
+  border-radius: 5px;
+  background-color: #2d2d2d;
+  color: #fff;
+  font-size: 14px;
+}
+
+.register-input::placeholder {
+  color: #aaa;
+}
+
+/* Input focus style */
+.register-input:focus {
+  outline: none;
+  border-color: #4CAF50;
+}
+
+/* Register Button */
+.register-button {
+  width: 100%;
+  padding: 12px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.register-button:hover {
+  background-color: #45a049;
+}
+
+/* Link Styling */
+.register-container p {
+  color: #bbb;
+  margin-top: 15px;
+  text-align: center;
+}
+
+.register-container a {
+  color: #4CAF50;
+  text-decoration: none;
+}
+
+.register-container a:hover {
+  text-decoration: underline;
+}
+
+
+/* Scoped container for pricing component */
+.pricing-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 83vh; /* Use min-height to prevent unnecessary scrolls */
+  background-color: #212121; /* Dark background for the page */
+  color: white;
+  padding: 20px;
+  position: relative;
+  top: 7px;
+  overflow: hidden; /* Avoid overflow causing scrollbars */
+  box-sizing: border-box; /* Ensure padding doesn't affect layout */
+}
+
+/* Pricing Heading */
+.pricing-container .pricing-heading {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 40px;
+  text-align: center;
+  color: #ffffff;
+}
+
+/* Pricing Plans Container */
+.pricing-container .pricing-plans {
+  display: flex;
+  gap: 30px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
+  max-width: 100%; /* Prevent overflow */
+}
+
+/* Individual Pricing Plan */
+.pricing-container .pricing-plan {
+  background-color: #333;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.4);
+  width: 300px;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  position: relative;
+  margin: 0 auto; /* Ensure plans are centered */
+}
+
+.pricing-container .pricing-plan:hover {
+  transform: scale(1.05);
+}
+
+.pricing-container .pricing-plan.selected {
+  transform: scale(1.1); /* Increase size for selected plan */
+  box-shadow: 0 8px 16px rgba(72, 187, 120, 0.6); /* Highlight selected plan */
+  border: 2px solid #4caf50;
+}
+
+.pricing-container .pricing-plan.current-plan {
+  background-color: #444; /* Dim the current plan */
+  cursor: not-allowed;
+  border: 2px solid #888;
+}
+
+.pricing-container .pricing-plan.current-plan:hover {
+  transform: none;
+}
+
+/* Current Plan Badge */
+.pricing-container .current-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: #4caf50;
+  color: white;
+  font-size: 12px;
+  padding: 5px 10px;
+  border-radius: 15px;
+}
+
+/* Plan Title */
+.pricing-container .plan-title {
+  font-size: 26px;
+  font-weight: bold;
+  color: #4CAF50;
+  margin-bottom: 15px;
+  border-radius: 7px;
+}
+
+/* Plan Details */
+.pricing-container .plan-details {
+  font-size: 20px;
+  color: #bbb;
+  margin-bottom: 15px;
+  border-radius: 7px;
+}
+
+/* Plan Description */
+.pricing-container .plan-description {
+  font-size: 16px;
+  color: #999;
+  margin-bottom: 10px;
+  border-radius: 7px;
+}
+
+/* Upgrade Button */
+.pricing-container .btn-upgrade {
+  background-color: #4CAF50;
+  color: white;
+  font-size: 18px;
+  padding: 15px 25px;
+  border-radius: 8px;
+  text-decoration: none;
+  display: inline-block;
+  transition: background-color 0.3s;
+  margin-top: 20px;
+  cursor: pointer;
+}
+
+.pricing-container .btn-upgrade:disabled {
+  background-color: #555;
+  cursor: not-allowed;
+}
+
+.pricing-container .btn-upgrade:hover:enabled {
+  background-color: #45a049;
+}
+
+/* Disabled Plan */
+.pricing-plan.disabled-plan {
+  background-color: #555;
+  color: #aaa;
+  cursor: not-allowed;
+  opacity: 0.7;
+  pointer-events: none; /* Prevent interaction */
+}
+
+/* Disabled Badge */
+.disabled-badge {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  background-color: #888;
+  color: white;
+  font-size: 12px;
+  padding: 5px 10px;
+  border-radius: 15px;
+}
+
+/* Highlight Current Plan */
+.pricing-plan.current-plan {
+  border: 2px solid #4caf50;
+}
+
+/* Selected Plan */
+.pricing-plan.selected {
+  border: 2px solid #ffa500;
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(255, 165, 0, 0.5);
+}
+
+.plan-price{
+  border-radius: 7px;
+}
+
+.billing-cycle-toggle {
+  display: flex;
+  justify-content: center;
+  gap: 10px; /* Space between buttons */
+}
+
+.billing-cycle-toggle button {
+  background-color: #f0f0f0; /* Neutral background for unselected buttons */
+  border: 2px solid #d0d0d0; /* Border for unselected buttons */
+  color: #333; /* Neutral text color */
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: 500;
+  border-radius: 25px; /* Rounded edges for buttons */
+  cursor: pointer;
+  transition: all 0.3s ease; /* Smooth transition for hover/selection */
+}
+
+.billing-cycle-toggle button:hover {
+  background-color: #e0e0e0; /* Slightly darker on hover */
+}
+
+.billing-cycle-toggle button.active {
+  background-color: #4caf50; /* Green background for selected button */
+  color: white; /* White text for better contrast */
+  border: 2px solid #4caf50; /* Green border for selected button */
+  box-shadow: 0px 4px 10px rgba(0, 128, 0, 0.3); /* Add a slight shadow for emphasis */
+}
+
+
+/* Header Container */
+.container.headerwidth {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #1e1e1e;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Style for tokens-left section */
+.tokens-left {
+  color: white; /* White text */
+  padding: 8px 15px; /* Some padding for better appearance */
+  border-radius: 25px; /* Rounded corners */
+  font-weight: bold;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  position: relative;
+  left: 300px;
+  justify-content: center;
+  transition: transform 0.3s ease-in-out; /* Smooth transform effect */
+}
+
+
+/* App Name (Clickable Title) */
+.app-name {
+  cursor: pointer;
+}
+
+.app-name h4 {
+  font-size: 24px;
+  color: white;
+  margin: 0;
+}
+
+/* Button Container */
+.button-container {
+  display: flex;
+  gap: 10px;
+}
+
+/* General Button Styles */
+.btn-outline-light {
+  color: white;
+  border: 1px solid white;
+  background-color: transparent;
+  padding: 8px 16px;
+  font-size: 14px;
+  border-radius: 4px;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.btn-outline-light:hover {
+  background-color: #4caf50;
+  border-color: #4caf50;
+  cursor: pointer;
+}
+
+/* Hover effect for Login and Pricing buttons */
+.button-container button {
+  transition: transform 0.2s;
+}
+
+.button-container button:hover {
+  transform: scale(1.05);
+}
+
+/* Add a responsive design for smaller screens */
+@media screen and (max-width: 768px) {
+  .container.headerwidth {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .button-container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* Container for user details */
+.user-details-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%; /* Fill entire available viewport */
+  padding: 20px;
+  position: relative;
+  top: 20px;
+  background-color: #1e1e1e; /* Consistent dark background */
+  font-family: "Arial", sans-serif;
+}
+
+/* Card styling */
+.user-details-card {
+  background: #1e1e1e; /* Dark card background */
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Slightly heavier shadow for depth */
+  padding: 20px 30px;
+  max-width: 450px;
+  width: 100%;
+  text-align: left;
+  border: 1px solid #333; /* Subtle border for card */
+  overflow: hidden; /* Prevent overflow issues inside the card */
+}
+
+/* Title styling */
+.user-details-title {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #4caf50; /* Accent color for the title */
+  margin-bottom: 20px;
+  text-align: center;
+  border-bottom: 2px solid #4caf50; /* Accent underline */
+  padding-bottom: 10px;
+}
+
+
+
+/* Info styling */
+.user-details-info p {
+  font-size: 1rem;
+  color: #bbb; /* Soft text color */
+  margin: 10px 0;
+  line-height: 1.6;
+}
+
+/* Strong text for labels */
+.user-details-info strong {
+  color: #ffffff; /* Bright white for labels */
+  font-weight: bold;
+}
+
+/* Message styling for non-logged-in users */
+.user-details-message {
+  font-size: 1.2rem;
+  color: #999; /* Muted gray for the message */
+  text-align: center;
+  background-color: #101010;
+  padding: 15px;
+  border-radius: 8px;
+  border: 1px solid #333;
+}
+
+/* Add subtle hover effect to the card */
+.user-details-card:hover {
+  transform: scale(1.02); /* Slightly enlarge on hover */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+}
+
+/* Upgrade button styling */
+.upgrade-button {
+  background-color: #4caf50; /* Accent color */
+  color: white;
+  border: none;
+  padding: 3px 7px;
+  font-size: 0.9rem;
+  position: relative;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+  float: right;
+}
+
+/* Hover effect for the button */
+.upgrade-button:hover {
+  background-color: #45a049;
+  transform: scale(1.05); /* Slight enlargement on hover */
+}
+
+/* Focus state for accessibility */
+.upgrade-button:focus {
+  outline: 2px solid #4caf50;
+  outline-offset: 2px;
+}
+
+/* Adjust button appearance for better alignment */
+.upgrade-button {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.userdetailicon{
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+.userdetailicon:hover{
+  transform: scale(110%);
+}
+
+/* Skeleton loader styles */
+.skeleton {
+  background: #1e1e1e;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  padding: 20px 30px;
+  max-width: 450px;
+  width: 100%;
+  height: 100%;
+  border: 1px solid #333;
+}
+
+.skeleton-title {
+  width: 60%;
+  height: 20px;
+  background: #333;
+  margin-bottom: 15px;
+  border-radius: 4px;
+  animation: shimmer 1.5s infinite linear;
+}
+
+.skeleton-text {
+  width: 80%;
+  height: 15px;
+  background: #333;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  animation: shimmer 1.5s infinite linear;
+}
+
+.skeleton-button {
+  width: 100px;
+  height: 30px;
+  background: #333;
+  border-radius: 4px;
+  margin-top: 10px;
+  animation: shimmer 1.5s infinite linear;
+}
+
+/* Shimmer effect */
+@keyframes shimmer {
+  0% {
+    background-color: #222;
+  }
+  50% {
+    background-color: #333;
+  }
+  100% {
+    background-color: #222;
+  }
+}
+
+
