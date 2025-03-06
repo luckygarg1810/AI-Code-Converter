@@ -9,20 +9,46 @@ export default function ChatInput({ onSend }) {
   const [question, setQuestion] = useState("");
   const codeRef = useRef(null);
   const [showPopup, setShowPopup] = useState(false);
-  const {isLoggedOut} = useAuth()
-  const {decrementTokens} = useToken()
+  const {isLoggedOut, token} = useAuth()
+  const {decrementTokens, tokensLeft, currentPlan} = useToken()
+  const [guestTokensLeft, setGuestTokensLeft] = useState(() => {
+    const savedTokens = localStorage.getItem("guestTokens");
+    return savedTokens !== null ? Number(savedTokens) : 10;
+  });
+
 
   const handleSendMessage = (e) => {
     e.preventDefault();
 
-    if (question.trim()) {
-      onSend(question);
+    if (!isConvertDisabled) {
+      if (question.trim()) {
+        onSend(question);
+      }
+      decrementTokens();
+
+      if (!token) {
+        // For guest users, manually update local tokens
+        setGuestTokensLeft((prev) => {
+          const updatedTokens = prev - 1;
+          localStorage.setItem("guestTokens", updatedTokens);
+          return updatedTokens;
+        });
+      }
     }
-     decrementTokens()
   };
 
   const clear = () => {
     setQuestion("");
+  };
+
+  const isGuest = !token;
+  const effectiveTokensLeft = isGuest ? guestTokensLeft : tokensLeft;
+  const isConvertDisabled = effectiveTokensLeft === 0;
+
+  const getTooltip = () => {
+    if (isGuest) return "Please login to use more";
+    if (currentPlan === "FREE") return "Please upgrade to use more";
+    return "";
   };
 
  
@@ -33,40 +59,40 @@ export default function ChatInput({ onSend }) {
     }
   }, [question]); // Reapply highlighting whenever the question (code) changes
 
-  // useEffect(() => {
-  //   if (isLoggedOut) {
-  //     setShowPopup(true);
-  //     const timer = setTimeout(() => setShowPopup(false), 3000); // Hide popup after 3 seconds
-  //     return () => clearTimeout(timer); // Cleanup timeout on component unmount
-  //   }
-  // }, [isLoggedOut]);
-
   return (
     <div className="chat-input-container">
-     {/* {showPopup && (
-  <div className="popup-message">
-    <span className="popup-icon">✅</span>
-    <p>You have been logged out successfully.</p>
-  </div>
-     )} */}
-      <form className="d-flex flex-column" onSubmit={handleSendMessage}>
-        <textarea
-          ref={codeRef}
-          className="chat-textarea language-java"
-          placeholder="Type your code here..."
-          value={question}
-          rows={20}
-          onChange={(e) => setQuestion(e.target.value)}
-        />
-        <div className="d-flex justify-content-center mt-2">
-          <button type="submit" className="btn btn-success m-2">
-            Convert
-          </button>
-          <button type="reset" onClick={clear} className="btn btn-secondary m-2">
-            Clear
-          </button>
-        </div>
-      </form>
+  <form className="d-flex flex-column" onSubmit={handleSendMessage}>
+    <textarea
+      ref={codeRef}
+      className="chat-textarea language-java"
+      placeholder="Type your code here..."
+      value={question}
+      rows={20}
+      onChange={(e) => setQuestion(e.target.value)}
+    />
+    <div className="d-flex justify-content-center mt-2">
+      <div
+        className="m-2"
+        title={isConvertDisabled ? getTooltip() : ""}
+        style={{ display: "inline-block" }}
+      >
+        <button
+          type="submit"
+          className="btn btn-success"
+          disabled={isConvertDisabled}
+        >
+          Convert
+        </button>
+      </div>
+      <button
+        type="reset"
+        onClick={clear}
+        className="btn btn-secondary m-2"
+      >
+        Clear
+      </button>
     </div>
+  </form>
+</div>
   );
 }
