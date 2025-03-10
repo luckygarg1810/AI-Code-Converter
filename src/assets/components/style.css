@@ -844,11 +844,6 @@
 }
 
 /* Add subtle hover effect to the card */
-.user-details-card:hover {
-  transform: scale(1.02); /* Slightly enlarge on hover */
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
-}
 
 /* Upgrade button styling */
 .upgrade-button {
@@ -942,6 +937,44 @@
     background-color: #222;
   }
 }
+.icon-button {
+  background: none !important;
+  border: none !important;
+  cursor: pointer;
+  padding: 0.1px;
+  margin-left: 13px;
+  transform: scale(0.9);
+  outline: none !important; /* Prevent outline */
+}
 
+.icon-button img {
+  width: 18px;
+  height: 18px;
+  transition: opacity 0.2s ease-in-out;
+  border: none;
+}
 
+.icon-button:hover img {
+  opacity: 0.7;
+  transform: scale(1.1);
+}
 
+.save-button {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.edit-input {
+  padding: 2px;
+  font-size: 14px;
+  background-color: transparent;
+  margin-left: 8px;
+  color: white;
+  border-color: white;
+  border-radius: 5px;
+}
