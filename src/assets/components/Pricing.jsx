@@ -4,6 +4,7 @@ import { useAuth } from "../../security/AuthContext";
 import axios from "axios";
 import { fetchUserDetails } from "../service/fetchUserDetails";
 import { useToken } from "../../security/TokenContext";
+import { BeatLoader } from "react-spinners";
 
 function Pricing() {
   const [selectedPlan, setSelectedPlan] = useState(null);
@@ -12,6 +13,7 @@ function Pricing() {
   const [billingCycle, setBillingCycle] = useState("monthly"); // Track current plan
   const navigate = useNavigate();
   const {refreshTokens} = useToken();
+  const [loading, setLoading] = useState(false);
   
   const [hasAnnualPlan, setHasAnnualPlan] = useState(false); // Track if user has an annual plan
   // Plans array with added pricing details
@@ -46,25 +48,6 @@ function Pricing() {
     },
   ];
 
-  // useEffect(() => {
-  //   // Dynamically load Razorpay script
-  //   const script = document.createElement("script");
-  //   script.src = "https://checkout.razorpay.com/v1/checkout.js";
-  //   script.async = true;
-  //   script.onload = () => {
-  //   };
-  //   script.onerror = () => {
-  //     console.error("Failed to load Razorpay script");
-  //   };
-  //   document.body.appendChild(script);
-
-  //   // Cleanup script on unmount
-  //   return () => {
-  //     document.body.removeChild(script);
-  //   };
-  // }, []);
-
-  // Fetch the current plan on component mount
   useEffect(() => {
     if (token && userId) {
       fetchUserDetails(token, userId)
@@ -146,7 +129,7 @@ function Pricing() {
 
   // Handle the upgrade button click
   const handleUpgradeClick = async () => {
-    console.log("Upgrade button clicked");  // Check if this prints
+    setLoading(true)
     if (selectedPlan && token) {
       try {
         // Call backend to create Razorpay order
@@ -191,8 +174,6 @@ function Pricing() {
               isAnnual: billingCycle === "annually"
             };
             // Send payment details to backend for verification and plan upgrade
-            console.log("Upgrade API URL:", `${import.meta.env.VITE_APP_API_URL}/api/payment/upgrade/${userId}`);
-            console.log("Payload sent:", paymentDetails);
             const upgradeResponse = await axios.post(
               `${import.meta.env.VITE_APP_API_URL}/api/payment/upgrade/${userId}`,
               paymentDetails,
@@ -202,6 +183,7 @@ function Pricing() {
             );
             console.log(upgradeResponse.data);
             refreshTokens();
+            setLoading(false)
             navigate("/"); // Redirect to home page on successful payment
           },
           prefill: {
@@ -212,12 +194,11 @@ function Pricing() {
             color: "#3399cc",
           },
         };
-        console.log("🚀 About to open Razorpay checkout...");
         const rzp = new window.Razorpay(options);
         rzp.open();
-        console.log("✅ Razorpay checkout opened!");
         
       } catch (error) {
+        setLoading(false)
         console.error("Error initiating Razorpay payment:", error);
         alert("An error occurred while processing the payment. Please try again.");
       }
@@ -292,7 +273,11 @@ function Pricing() {
           plans.find((p) => p.id === selectedPlan)?.order <= plans.find((p) => p.id === currentPlan)?.order
         }
       >
-        Pay ₹{calculateFinalPrice().toFixed(2)}
+          {loading ? (
+        <BeatLoader className="loader-container" color="#ffffff" size={8} />
+      ) : (
+        <>Pay ₹{calculateFinalPrice().toFixed(2)}</>
+      )}
       </button>
 
     </div>
