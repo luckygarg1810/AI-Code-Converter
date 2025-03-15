@@ -29,7 +29,7 @@ function Login() {
   if (success) {
     navigate("/"); // Navigate to homepage on successful login
   } else {
-    setLoading(true)
+    setLoading(false)
     setErrorMessage(message); // Set error message if login fails
   }
   };

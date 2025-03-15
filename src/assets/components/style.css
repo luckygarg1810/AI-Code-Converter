@@ -106,14 +106,13 @@
     gap: 20px;
   }
   
-  pre code.hljs {
-      height: 431px;
-  }
 
   .preResponse pre {
-    background-color: #333;
-    border-radius: 8px;
+    height: 435px;
+    background-color: rgb(30,30,30);
+    border-radius: 10px;
     overflow-x: auto;
+    padding: 10px;
   }
   
   /* Loading message */
@@ -139,15 +138,21 @@
     background-color: #efe5e5 !important;
    
 }
+.hljs {
+  color: #abb2bf;
+  background: #1a1d1f !important  ;
+}
 
-
+.responsediv{
+  height: 0vh;
+}
 
 .chat-textarea {
     width: 100%;
     font-family: "Courier New", Courier, monospace;
     font-size: 14px;
     background-color: #2d2d2d;
-    border: 1px solid #444;
+    border: 1px solid #444 !important;
     padding: 10px;
     resize: none;
     overflow: auto; /* Enable scrollbars */
@@ -341,7 +346,9 @@
   transition: background-color 0.3s;
   margin-top: 20px;
 }
-
+.loginButton{
+  background-color: #4caf50 !important;
+}
 /* Button hover effect */
 .login-container button:hover {
   background-color: #45a049; /* Darker green on hover */
@@ -391,6 +398,7 @@
   min-height: 83vh;
   padding: 20px;
   position: relative;
+  border-radius: 5px;
   top: 14px;
   overflow: hidden;
   background-color: #212121; /* Dark background for the page */
@@ -527,6 +535,7 @@
   padding: 20px;
   position: relative;
   top: 7px;
+  z-index: 1;
   overflow: hidden; /* Avoid overflow causing scrollbars */
   box-sizing: border-box; /* Ensure padding doesn't affect layout */
 }
@@ -686,7 +695,10 @@
   justify-content: center;
   gap: 10px; /* Space between buttons */
 }
-
+.title{
+  display:flex;
+  gap: 12px;
+}
 .billing-cycle-toggle button {
   background-color: #f0f0f0; /* Neutral background for unselected buttons */
   border: 2px solid #d0d0d0; /* Border for unselected buttons */
@@ -718,7 +730,7 @@
   align-items: center;
   padding: 10px 20px;
   background-color: #1e1e1e;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 10px rgba(0, 0, 0, 0.2);
 }
 
 /* Style for tokens-left section */
@@ -957,7 +969,7 @@
   border: none !important;
   cursor: pointer;
   padding: 0.1px;
-  margin-left: 13px;
+  margin-left: 3px;
   transform: scale(0.9);
   outline: none !important; /* Prevent outline */
 }

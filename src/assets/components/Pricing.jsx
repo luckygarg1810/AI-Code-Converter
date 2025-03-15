@@ -192,6 +192,15 @@ function Pricing() {
           },
           theme: {
             color: "#3399cc",
+            backdrop: false, // Ensures that the pricing page remains visible
+          },
+          modal: {
+            backdropclose: false, // Prevents closing on clicking outside the modal
+            escape: true, // Allows users to close with Esc key
+            ondismiss: function () {
+              console.log("Payment modal closed by user"); // Debug log
+              setLoading(false); // Reset loading state when user exits
+            },
           },
         };
         const rzp = new window.Razorpay(options);
@@ -203,6 +212,7 @@ function Pricing() {
         alert("An error occurred while processing the payment. Please try again.");
       }
     } else {
+      setLoading(false)
       alert("Please select a valid plan to upgrade.");
     }
   };

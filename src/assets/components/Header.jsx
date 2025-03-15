@@ -19,7 +19,10 @@ function Header() {
     <div className="container headerwidth d-flex justify-content-between align-items-center">
       {/* Title with click to go to homepage */}
       <div className="app-name" onClick={handleHomeClick}>
-        <h4 className="m-0 text-white">AI Code Converter</h4>
+        <div className="title">
+          <img src={logo} alt="" />
+          <h4 className="m-0 text-white name">AI Code Converter</h4>
+          </div>
       </div>
 
       {!token && (
@@ -40,17 +43,17 @@ function Header() {
         
         {token && currentPlan !== 'SUPER' && (
           <Link to="/pricing">
-            <button className="btn btn-outline-light m-2">Upgrade</button>
+            <button className="btn btn-outline-success m-2">Upgrade</button>
           </Link>
         )}
       
         {/* Show Login button when user is not logged in */}
         {!token ? (
           <Link to="/login">
-            <button className="btn btn-outline-light m-2">Login</button>
+            <button className="btn btn-success loginButton m-2">Login</button>
           </Link>
         ) : (
-          <button className="btn btn-outline-light m-2" onClick={logout}>
+          <button className="btn btn-outline-danger m-2" onClick={logout}>
             Logout
           </button>
         )}

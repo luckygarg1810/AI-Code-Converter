@@ -26,8 +26,7 @@ export function AuthProvider({ children }) {
       return { success: true };
     }
     catch(error){
-      console.error("Login failed", error);
-      return { success: false, message: "Login failed!" };
+      return { success: false, message: "Incorrect username or password!" };
     }
   };
 
