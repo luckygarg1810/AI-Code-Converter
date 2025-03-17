@@ -1,3 +1,4 @@
+import { useAuth } from "../../security/AuthContext";
 import { useToken } from "../../security/TokenContext";
 
 export default function LanguageSelector({
@@ -17,12 +18,17 @@ export default function LanguageSelector({
   ];
 
   const {currentPlan} = useToken()
+  const {isLoggedOut} = useAuth()
 
   const languageslite = [
     "Java", "Python", "JavaScript", "C++"
   ];
 
-  const availableLanguages = currentPlan === 'SUPER' ? languages : languageslite;
+  let availableLanguages = languageslite;
+
+  if(!isLoggedOut){
+     availableLanguages = currentPlan === 'SUPER' ? languages : languageslite;
+  }
 
   return (
     <div className="languageSelector d-flex justify-content-center my-3">

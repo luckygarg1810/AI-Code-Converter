@@ -19,6 +19,7 @@ export function AuthProvider({ children }) {
       const response = await axios.post(`${import.meta.env.VITE_APP_API_URL}/api/auth/login`, { username, password });
       console.log(response)
       const { id, token } = response.data;
+      setIsLoggedOut(false)
       localStorage.setItem("token", token);
       localStorage.setItem("userId", id)
       setToken(token);
@@ -29,16 +30,6 @@ export function AuthProvider({ children }) {
       return { success: false, message: "Incorrect username or password!" };
     }
   };
-
-  // useEffect(() => {
-  //   const savedToken = localStorage.getItem("token");
-  //   const savedUserId = localStorage.getItem("userId");
-
-  //   if (savedToken && savedUserId) {
-  //     // Clear session on app reload
-  //     logout();
-  //   }
-  // }, []);
 
   const logout = () => {
     setToken(null);
